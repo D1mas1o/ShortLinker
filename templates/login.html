@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <script>
+        <!--
+        function Complete2()
+        {
+
+            var login = document.getElementById("Login");
+            var pass = document.getElementById("Password");
+
+
+
+            if (login.length==0||login.length<5) {
+                alert("Введите Логин (больше 5 символов)")
+                return;
+              }
+            if (pass.length==0||pass.length<5) {
+                alert("Введите Пароль (больше 5 символов)")
+                return;
+              }
+            var myData =
+
+            {
+                Login: ""+document.Data.Login.value,
+                Password: ""+document.Data.Password.value,
+            };
+            fetch('http://127.0.0.1:5000/login', {
+              method: 'post',
+            headers: {
+             'Accept': 'application/json, text/plain, */*',
+             'Content-Type': 'application/json'
+             },
+                body: JSON.stringify(myData)
+                })
+
+              }
+
+        //-->
+    </script>
+</head>
+<body>
+<H1>Авторизация</H1>
+<form action="/login/" method="get" id="form">
+
+</form>
+
+<FORM NAME="Data" id="Data" >
+    <!-- Анкета -->
+    <p>
+       <B>Логин:<B>
+            <input required NAME="Login" id="Login"  SIZE=20  ><span></span><br>
+
+         <B>Пароль:<B>
+            <input required type="password" id="Password"  NAME="Password" SIZE=20  ><span></span><br>
+
+    <!-- Кнопки готовности и сброса -->
+    <INPUT TYPE="reset" VALUE="Сброс">
+    </p>
+</FORM>
+<INPUT TYPE="button" VALUE="Готово" onclick="Complete2();location.href='http://127.0.0.1:5000/'" >
+</body>
+</html>

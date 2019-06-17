@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Обработка данных форм</title>
+    <link href="{{ url_for('static', filename='Bar.css') }}" rel="stylesheet">
+    <ul id="navbar">
+    <li><a href="/login">Вход</a></li>
+     <li><a href="/register">Регистрация</a></li>
+        {% if user_id %}
+        <li><a href="/links">Ссылки</a></li>
+        <li><a onclick='document.getElementById("form_logout").submit();'>Выйти</a></li>
+        <li><a href="/"> {{user_firstname + " " + user_lastname}}</a></li>
+
+        {% else %}
+
+        {% endif %}
+</ul>
+</head>
+<body>
+
+    <form id="form_logout" action="/logout" method="post">
+
+    {% if links%}
+    <ol >
+
+        {% for link in links%}
+        <li><a href="{{link[0]}}"> {{link[0]}}</a>
+        <br><a href="http://127.0.0.1:5000/sh.ly/{{link[1]}}"> => http://127.0.0.1:5000/sh.ly/{{link[1]}}</a></li>
+        {% if link[2] == 1%}
+        Публичная ссылка
+        {% else %}
+            {% if link[2] == 2%}
+            Ссылка общего доступа
+            {% else %}
+                {% if link[2] == 3%}
+                Приватная ссылка
+                {% else %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        <br>
+        <form action="/links{{link[1]}}" method="post" id="{{link[1]}}">
+        </form>
+        <input type="button"  class="floated" id="{{link}}" value="Редактировать">
+        <input type="submit" form="{{link[1]}}" class="floated" id="slide_stop_button" value="Удалить">
+
+        {% endfor %}
+    </ol>
+
+    {% else %}
+
+        </form>
+         <form method="post" action="">
+        <p>
+        <input required type="text" placeholder="Введите URL" name="user_url" name="LinkMode">
+        <input type="submit">
+        <br>
+        {% if short_url %}
+        <input type="text" size="50" placeholder="Короткая ссылка" name="user_url" value={{short_url}} >
+
+        {% endif %}
+        {% if user_id%}
+        <br>
+        <input required type="radio" id="Mode1" name="LinkMode" value="3">
+        <label for="Mode1">Приватная ссылка</label>
+        <br>
+        <input required type="radio" id="Mode2" name="LinkMode" value="2">
+        <label for="Mode2">Ссылка общего доступа</label>
+        <br>
+        <input required type="radio" id="Mode3" name="LinkMode" value="1">
+        <label for="Mode3">Публичная ссылка</label>
+        <br>
+        {% else %}
+        <br>
+        <input required type="radio" id="Mode3" name="LinkMode" value="1">
+        <label for="Mode3">Публичная ссылка</label>
+        {% endif %}
+        </p>
+
+    </form>
+
+    {% endif %}
+
+
+
+</body>
+</html>
